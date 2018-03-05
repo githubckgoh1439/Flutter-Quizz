@@ -23,7 +23,7 @@ class QuizPageState extends State {
             new AnswerButton(false, () => print("You tapped on false"))
           ],
         ),
-        new CorrectWrongOverlay(false)
+        new CorrectWrongOverlay(true)
       ],
     );
   }

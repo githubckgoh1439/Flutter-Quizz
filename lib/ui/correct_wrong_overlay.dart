@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class CorrectWrongOverlay extends StatefulWidget {
 
@@ -10,7 +11,22 @@ class CorrectWrongOverlay extends StatefulWidget {
   State<StatefulWidget> createState() => new CorrectWrongOverlayState();
 }
 
-class CorrectWrongOverlayState extends State<CorrectWrongOverlay> {
+class CorrectWrongOverlayState extends State<CorrectWrongOverlay>
+    with SingleTickerProviderStateMixin {
+
+  Animation<double> _iconAnimation;
+  AnimationController _iconAnimationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _iconAnimationController =
+    new AnimationController(duration: new Duration(seconds: 2), vsync: this);
+    _iconAnimation = new CurvedAnimation(
+        parent: _iconAnimationController, curve: Curves.elasticOut);
+    _iconAnimation.addListener(() => this.setState(() {}));
+    _iconAnimationController.forward();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +44,14 @@ class CorrectWrongOverlayState extends State<CorrectWrongOverlay> {
               decoration: new BoxDecoration(
                   color: Colors.white, shape: BoxShape.circle),
               margin: new EdgeInsets.only(bottom: 20.0),
-              child: new Icon(icon, size: 80.0,),
+              child: new Transform.rotate(
+                angle: _iconAnimation.value * 2 * PI,
+                child: new Icon(icon, size: 80.0,),
+              ),
             ),
             new Text(label,
-              style: new TextStyle(color: Colors.white, fontSize: 30.0),)
+              style: new TextStyle(
+                  color: Colors.white, fontSize: _iconAnimation.value * 30.0),)
           ],
         ),
       ),
