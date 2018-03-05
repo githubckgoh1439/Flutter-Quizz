@@ -23,7 +23,7 @@ class QuestionTextState extends State<QuestionText>
     _fontSizeAnimationController = new AnimationController(
         duration: new Duration(milliseconds: 500), vsync: this);
     _fontSizeAnimation = new CurvedAnimation(
-        parent: _fontSizeAnimationController, curve: Curves.bounceIn);
+        parent: _fontSizeAnimationController, curve: Curves.easeOut);
     _fontSizeAnimation.addListener(() => this.setState(() {}));
     _fontSizeAnimationController.forward();
   }

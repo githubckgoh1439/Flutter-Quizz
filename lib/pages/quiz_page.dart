@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../ui/answer_button.dart';
 import '../ui/question_text.dart';
+import '../ui/correct_wrong_overlay.dart';
 
 class QuizPage extends StatefulWidget {
 
@@ -13,6 +14,7 @@ class QuizPageState extends State {
   @override
   Widget build(BuildContext context) {
     return new Stack(
+      fit: StackFit.expand,
       children: <Widget>[
         new Column(
           children: <Widget>[
@@ -21,6 +23,7 @@ class QuizPageState extends State {
             new AnswerButton(false, () => print("You tapped on false"))
           ],
         ),
+        new CorrectWrongOverlay(false)
       ],
     );
   }
