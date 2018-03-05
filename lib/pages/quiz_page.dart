@@ -4,6 +4,7 @@ import '../ui/question_text.dart';
 import '../ui/correct_wrong_overlay.dart';
 import '../models/Quiz.dart';
 import '../models/Question.dart';
+import 'score_page.dart';
 
 class QuizPage extends StatefulWidget {
 
@@ -20,6 +21,7 @@ class QuizPageState extends State {
   ]);
 
   Question _currentQuestion;
+  String _currentQuestionText;
   int _currentQuestionNumber;
   bool _currentAnswerIsCorrect;
 
@@ -29,6 +31,7 @@ class QuizPageState extends State {
   void initState() {
     super.initState();
     _currentQuestion = _quiz.nextQuestion;
+    _currentQuestionText = _currentQuestion.question;
     _currentQuestionNumber = _quiz.questionNumber;
   }
 
@@ -40,7 +43,7 @@ class QuizPageState extends State {
         new Column(
           children: <Widget>[
             new AnswerButton(true, () => _onAnswerTapped(true)),
-            new QuestionText(_currentQuestionNumber, _currentQuestion.question),
+            new QuestionText(_currentQuestionNumber, _currentQuestionText),
             new AnswerButton(false, () => _onAnswerTapped(false))
           ],
         ),
@@ -61,8 +64,24 @@ class QuizPageState extends State {
   }
 
   void _onPostAnswerOverlayTapped() {
-    print("Inside on tap method");
     _currentQuestion = _quiz.nextQuestion;
+    if (_currentQuestion == null) {
+      _showScorePage();
+    } else {
+      _showNextQuestion();
+    }
+  }
+
+  void _showScorePage() {
+    Navigator.of(context)
+        .pushAndRemoveUntil(new MaterialPageRoute(
+        builder: (BuildContext context) =>
+        new ScorePage(_quiz.score, _quiz.numberOfQuestions)), (Route route) =>
+    route == null);
+  }
+
+  void _showNextQuestion() {
+    _currentQuestionText = _currentQuestion.question;
     _currentQuestionNumber = _quiz.questionNumber;
     this.setState(() {
       _shouldDisplayOverlay = false;

@@ -52,4 +52,10 @@ class QuestionTextState extends State<QuestionText>
       ),
     );
   }
+
+  @override
+  void dispose() {
+    _fontSizeAnimationController.dispose();
+    super.dispose();
+  }
 }
