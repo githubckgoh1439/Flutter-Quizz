@@ -1,7 +1,7 @@
 class Question {
 
-  String _question;
-  bool _answer;
+  String question;
+  bool answer;
 
-  Question(this._question, this._answer);
+  Question(this.question, this.answer);
 }
