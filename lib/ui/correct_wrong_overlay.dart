@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 class CorrectWrongOverlay extends StatefulWidget {
-
   final bool _isCorrect;
   final VoidCallback _onTap;
 
@@ -14,15 +13,14 @@ class CorrectWrongOverlay extends StatefulWidget {
 
 class CorrectWrongOverlayState extends State<CorrectWrongOverlay>
     with SingleTickerProviderStateMixin {
-
   Animation<double> _iconAnimation;
   AnimationController _iconAnimationController;
 
   @override
   void initState() {
     super.initState();
-    _iconAnimationController =
-    new AnimationController(duration: new Duration(seconds: 2), vsync: this);
+    _iconAnimationController = new AnimationController(
+        duration: new Duration(seconds: 2), vsync: this);
     _iconAnimation = new CurvedAnimation(
         parent: _iconAnimationController, curve: Curves.elasticOut);
     _iconAnimation.addListener(() => this.setState(() {}));
@@ -33,6 +31,8 @@ class CorrectWrongOverlayState extends State<CorrectWrongOverlay>
   Widget build(BuildContext context) {
     IconData icon = widget._isCorrect ? Icons.done : Icons.clear;
     String label = widget._isCorrect ? "Correct" : "Wrong";
+
+    const double PI = 3.1415926535897932;
 
     return new Material(
       color: Colors.black54,
@@ -47,12 +47,17 @@ class CorrectWrongOverlayState extends State<CorrectWrongOverlay>
               margin: new EdgeInsets.only(bottom: 20.0),
               child: new Transform.rotate(
                 angle: _iconAnimation.value * 2 * PI,
-                child: new Icon(icon, size: 80.0,),
+                child: new Icon(
+                  icon,
+                  size: 80.0,
+                ),
               ),
             ),
-            new Text(label,
+            new Text(
+              label,
               style: new TextStyle(
-                  color: Colors.white, fontSize: _iconAnimation.value * 30.0),)
+                  color: Colors.white, fontSize: _iconAnimation.value * 30.0),
+            )
           ],
         ),
       ),
